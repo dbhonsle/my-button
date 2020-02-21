@@ -35,5 +35,11 @@ class Button extends HTMLElement {
     this._shadowRoot = this.attachShadow({ mode: 'open' });
     this._shadowRoot.appendChild(template.content.cloneNode(true));
   }
+  static get observedAttributes() {
+    return ['label'];
+  }
+  attributeChangedCallback(name, oldVal, newVal) {
+    this[name] = newVal;
+  }
 }
 window.customElements.define('my-button', Button);
