@@ -34,6 +34,12 @@ class Button extends HTMLElement {
     super();
     this._shadowRoot = this.attachShadow({ mode: 'open' });
     this._shadowRoot.appendChild(template.content.cloneNode(true));
+    /* Purely Experimantal */
+    this.$div = this._shadowRoot.querySelector('div')
+    console.log("For Wrapper");
+    console.log(this.$div.offsetHeight + "   " + this.$div.offsetWidth);
+    console.log(this.$div.clientHeight + "   " + this.$div.clientWidth);
+    /* Purely Experimantal */
     this.$button = this._shadowRoot.querySelector('button')
     this.$button.addEventListener('click', () => {
         this.dispatchEvent(
