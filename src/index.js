@@ -49,12 +49,31 @@ class Button extends HTMLElement {
         );
       });
   }
+
+  connectedCallback() {
+    /* Purely Experimantal */
+    this.$div = this._shadowRoot.querySelector('div')
+    console.log("Connected CB");
+    console.log(this.$div.offsetHeight + "   " + this.$div.offsetWidth);
+    console.log(this.$div.clientHeight + "   " + this.$div.clientWidth);
+    console.log("Connected CB END");
+    /* Purely Experimantal */
+
+  }
+
   static get observedAttributes() {
     return ['label'];
   }
   attributeChangedCallback(name, oldVal, newVal) {
     this[name] = newVal;
     this.render();
+    /* Purely Experimantal */
+    this.$div = this._shadowRoot.querySelector('div')
+    console.log("AttributeChanged CB");
+    console.log(this.$div.offsetHeight + "   " + this.$div.offsetWidth);
+    console.log(this.$div.clientHeight + "   " + this.$div.clientWidth);
+    console.log("AttributeChanged CB END");
+    /* Purely Experimantal */
   }
   render() {
     this.$button.innerHTML = this.label;
