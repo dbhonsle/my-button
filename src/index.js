@@ -32,15 +32,17 @@ template.innerHTML = `
 class Button extends HTMLElement {
   constructor() {
     super();
+    this._onButtonClick = this._onButtonClick.bind(this);
     this._shadowRoot = this.attachShadow({ mode: 'open' });
     this._shadowRoot.appendChild(template.content.cloneNode(true));
-    /* Purely Experimantal */
+    /* Purely Experimantal 
     this.$div = this._shadowRoot.querySelector('div')
     console.log("For Wrapper");
     console.log(this.$div.offsetHeight + "   " + this.$div.offsetWidth);
     console.log(this.$div.clientHeight + "   " + this.$div.clientWidth);
-    /* Purely Experimantal */
+     Purely Experimantal */
     this.$button = this._shadowRoot.querySelector('button')
+    /*
     this.$button.addEventListener('click', () => {
         this.dispatchEvent(
           new CustomEvent('onClick', {
@@ -48,32 +50,32 @@ class Button extends HTMLElement {
           })
         );
       });
+    */
   }
 
   connectedCallback() {
-    /* Purely Experimantal */
-    this.$div = this._shadowRoot.querySelector('div')
-    console.log("Connected CB");
-    console.log(this.$div.offsetHeight + "   " + this.$div.offsetWidth);
-    console.log(this.$div.clientHeight + "   " + this.$div.clientWidth);
-    console.log("Connected CB END");
-    /* Purely Experimantal */
-
+    this.$button.addEventListener('click',this._onButtonClick);
   }
 
+  disconnectedCallback() {
+    this.removeEventListener('click',this._onButtonClick);
+  }
+
+  _onButtonClick() {
+    this.dispatchEvent(
+      new CustomEvent('onClick', {
+        detail: 'Hello from within the Custom Element',
+      })
+    );
+  }
+  
   static get observedAttributes() {
     return ['label'];
   }
+
   attributeChangedCallback(name, oldVal, newVal) {
     this[name] = newVal;
     this.render();
-    /* Purely Experimantal */
-    this.$div = this._shadowRoot.querySelector('div')
-    console.log("AttributeChanged CB");
-    console.log(this.$div.offsetHeight + "   " + this.$div.offsetWidth);
-    console.log(this.$div.clientHeight + "   " + this.$div.clientWidth);
-    console.log("AttributeChanged CB END");
-    /* Purely Experimantal */
   }
   render() {
     this.$button.innerHTML = this.label;
